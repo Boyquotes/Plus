@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://d32tphq1fghm5"]
+
+[ext_resource type="Script" path="res://Player/player.gd" id="1_05rsy"]
+[ext_resource type="Texture2D" uid="uid://ctcl4hjpf48g3" path="res://Textures/icon.svg" id="2_g4qlc"]
+[ext_resource type="Script" path="res://Player/Camera2D.gd" id="3_f1wcr"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bvx7j"]
+radius = 27.074
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_fusuc"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/sync = true
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/sync = true
+
+[node name="Player" type="CharacterBody2D"]
+collision_layer = 2
+script = ExtResource("1_05rsy")
+jump_height = 100.0
+peak_time = 0.5
+descent_time = 0.4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_bvx7j")
+
+[node name="Icon" type="Sprite2D" parent="."]
+scale = Vector2(0.4375, 0.4375)
+texture = ExtResource("2_g4qlc")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position_smoothing_enabled = true
+script = ExtResource("3_f1wcr")
+camera_speed = 4.0
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_fusuc")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
